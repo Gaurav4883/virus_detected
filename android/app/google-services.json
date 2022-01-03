@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "320156761150",
+    "project_id": "carshareauthentication",
+    "storage_bucket": "carshareauthentication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320156761150:android:3ff2eb9d16971844e0e56f",
+        "android_client_info": {
+          "package_name": "com.example.authentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320156761150-1ahljvthfi1ga6692iadk5ghm2s1fhg2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.authentication",
+            "certificate_hash": "bd071d9aff8ac4ea5cf976b0f6d2183160379943"
+          }
+        },
+        {
+          "client_id": "320156761150-vkei4gr0sllrri4v47kslt53139dp8jg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm_0QGY5UwFKyob52QdmJEERiMV5VnJ_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320156761150-vkei4gr0sllrri4v47kslt53139dp8jg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
