@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'home_screen.dart';
 
@@ -113,6 +114,8 @@ class _MyProfileState extends State<MyProfile> {
                         //Validate returns true if the form is valid otherwise false
                         if (_formKey.currentState!.validate()) {
                           updateUser();
+                          Fluttertoast.showToast(
+                              msg: "User Updated Successfully!");
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -120,16 +123,20 @@ class _MyProfileState extends State<MyProfile> {
                         }
                       },
                       child: Text(
-                        "UPDATE CHANGES",
+                        "SAVE CHANGES",
                         style: TextStyle(fontSize: 18.0),
                       ),
                     ),
                     ElevatedButton(
                       onPressed: () => {
                         clearText(),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()))
                       },
                       child: Text(
-                        "CLEAR ALL",
+                        "CLEAR",
                         style: TextStyle(fontSize: 18.0),
                       ),
                       style: ElevatedButton.styleFrom(

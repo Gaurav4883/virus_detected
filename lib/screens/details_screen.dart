@@ -1,6 +1,10 @@
 import 'package:authentication/cars_details.dart';
 import 'package:authentication/model/cars.dart';
+import 'package:authentication/model/user_model.dart';
+import 'package:authentication/my_bookings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({Key? key, required this.model}) : super(key: key);
@@ -27,6 +31,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
     '9 Days',
     '10 Days'
   ];
+
+  // Checking if the booking days are null or not. If it's null then we won't let user to proceed
+  checkBookingDays() {
+    if (valueChoose == null) {
+      valueChoose = "1 Day";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +66,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 12.0,
-              ),
+              // SizedBox(
+              //   height: 12.0,
+              // ),
               Container(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
@@ -73,7 +84,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             widget.model.cars_model,
                             softWrap: true,
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ),
                         Text(
@@ -86,16 +97,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
-                    Text(
-                      "Car Details:",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 12.0,
-                    ),
+                    // Text(
+                    //   "Car Details:",
+                    //   style:
+                    //       TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -119,6 +127,22 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   onChanged: (value) => setState(() => this.value = value!)),
+              SizedBox(
+                height: 10,
+              ),
+
+              Row(
+                children: [
+                  Text(
+                    "    Select Booking Days",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
 
               // Here we write our drop down box for booking days
               Center(
@@ -131,11 +155,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         borderRadius: BorderRadius.circular(15)),
                     child: DropdownButton(
                       hint: Text(
-                        "Select Booking Days: ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 18),
+                        "1 Day",
+                        style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                       dropdownColor: Colors.blueGrey[200],
                       iconSize: 30,
@@ -169,20 +190,49 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   child: Container(
                     margin: EdgeInsets.all(16.0),
                     width: double.infinity,
-                    height: 60.0,
+                    height: 50.0,
+                    // Book Now Button
                     child: RawMaterialButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Book Now",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        fillColor: Colors.indigo[500],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        )),
+                      onPressed: () {
+                        checkBookingDays();
+                        //sending our data to cloud firebase with booking info collection
+                        Map<String, dynamic> data = {
+                          "Driver Needed": value,
+                          "Booking days": valueChoose,
+                          "car_image": widget.model.car_img_path,
+                          "car_id": widget.model.id,
+                          "car_name": widget.model.cars_model,
+                        };
+                        FirebaseFirestore.instance
+                            .collection("Booking Info")
+                            .add(data);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyBookings()));
+
+                        Fluttertoast.showToast(msg: "Booking Successfull!");
+
+                        // DocumentSnapshot variable = await FirebaseFirestore
+                        //     .instance
+                        //     .collection("Booking Info")
+                        //     .doc('7aFAeGnXMo6rsLVEvIb6')
+                        //     .get();
+                      },
+                      // Book Now Button properties
+                      child: Text(
+                        "Book Now",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      fillColor: Colors.indigo[500],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
                   ),
                 ),
               ),

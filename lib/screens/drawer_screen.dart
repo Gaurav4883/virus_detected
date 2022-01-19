@@ -1,5 +1,6 @@
 import 'package:authentication/model/user_model.dart';
 import 'package:authentication/my_bookings.dart';
+import 'package:authentication/my_bookings2.dart';
 import 'package:authentication/screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -98,18 +99,6 @@ class _MainDrawerState extends State<MainDrawer> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => MyBookings()),
-                );
-              }),
-          ListTile(
-              leading: Icon(Icons.reset_tv),
-              title: Text(
-                "Reset Password",
-                style: TextStyle(fontSize: 18),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
                 );
               }),
           ListTile(
